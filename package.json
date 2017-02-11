@@ -1,0 +1,25 @@
+{
+  "scripts": {
+    "preversion": "npm run lint && npm run deps && npm test",
+    "postversion": "git push && git push --tags",
+    "lint": "eslint .",
+    "deps": "dependency-check package.json && dependency-check package.json --unused --entry test/*.js -i dependency-check -i eslint -i eslint-config-minlint -i tap-spec",
+    "test": "tape test/*.js | tap-spec"
+  },
+  "devDependencies": {
+    "dependency-check": "^2.8.0",
+    "eslint": "^3.15.0",
+    "eslint-config-minlint": "^2.0.0",
+    "pull-async": "^1.0.0",
+    "pull-cat": "^1.1.11",
+    "pull-pushable": "^2.0.1",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.3"
+  },
+  "dependencies": {
+    "pull-flat-merge": "^1.1.0",
+    "pull-scan": "^1.0.0",
+    "pull-stream": "^3.5.0",
+    "xtend": "^4.0.1"
+  }
+}
