@@ -8,7 +8,7 @@
   },
   "scripts": {
     "preversion": "npm run lint && npm run deps && npm test",
-    "postversion": "git push && git push --tags",
+    "postversion": "git push && git push --tags && npm publish",
     "lint": "eslint .",
     "deps": "dependency-check package.json && dependency-check package.json --unused --entry test/*.js -i dependency-check -i eslint -i eslint-config-minlint -i tap-spec",
     "test": "tape test/*.js | tap-spec"

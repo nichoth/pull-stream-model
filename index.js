@@ -17,7 +17,7 @@ function Messages (effects, update) {
 }
 
 function Component (model) {
-    var effects = model.effects
+    var effects = model.effects || {}
     var msgs = Messages(effects, model.update)
     var state = model()
     var scan = Scan(function (_state, ev) {
