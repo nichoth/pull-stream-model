@@ -56,6 +56,7 @@ test('model', function (t) {
         S.collect(function (err, res) {
             t.error(err)
             t.deepEqual(res, [
+                '',
                 'hello!!!',
                 'hello!!! hi',
                 'hello!!! hi resolving',
