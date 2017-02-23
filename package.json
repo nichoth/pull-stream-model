@@ -14,6 +14,7 @@
     "test": "tape test/*.js | tap-spec"
   },
   "dependencies": {
+    "pull-cat": "^1.1.11",
     "pull-flat-merge": "^1.1.0",
     "pull-scan": "^1.0.0",
     "pull-stream": "^3.5.0",

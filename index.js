@@ -4,6 +4,7 @@ var Scan = require('pull-scan')
 var S = require('pull-stream/pull')
 S.through = require('pull-stream/throughs/through')
 S.map = require('pull-stream/throughs/map')
+var cat = require('pull-cat')
 
 function Messages (effects, update) {
     var keys = Object.keys(xtend(update, effects))
@@ -46,7 +47,10 @@ function Component (model) {
 
     return {
         effects: EffectsStream,
-        store: store,
+        store: function storeSink (source) {
+            var live = S( source, store )
+            return cat([ S.once(state), live ])
+        },
         msg: msgs
     }
 }
