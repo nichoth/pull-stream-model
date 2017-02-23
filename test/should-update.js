@@ -26,7 +26,7 @@ test('should update', function (t) {
 
     S(
         S.values([1,2,3]),
-        shouldUpdate(function (pres, next) { return false }),
+        shouldUpdate(function (prev, next) { return false }),
         S.collect(function (err, res) {
             t.error(err)
             t.deepEqual(res, [], 'should filter everything')

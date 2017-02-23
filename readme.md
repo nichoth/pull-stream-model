@@ -2,6 +2,8 @@
 
 ## example
 
+### model
+
 ```js
 var test = require('tape')
 var async = require('pull-async')
@@ -62,4 +64,21 @@ test('model', function (t) {
         })
     )
 })
+```
+
+### should update
+
+```js
+var shouldUpdate = require('pull-stream-model/should-update')
+
+S(
+    S.values([1,2,3]),
+    shouldUpdate(function (prev, next) {
+        return prev + next === 3
+    }),
+    S.collect(function (err, res) {
+        t.error(err)
+        t.deepEqual(res, [2], 'should filter the stream')
+    })
+)
 ```
