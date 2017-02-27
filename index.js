@@ -4,6 +4,7 @@ var Scan = require('pull-scan')
 var S = require('pull-stream/pull')
 S.through = require('pull-stream/throughs/through')
 S.map = require('pull-stream/throughs/map')
+S.once = require('pull-stream/sources/once')
 var cat = require('pull-cat')
 
 function Messages (effects, update, namespace) {
