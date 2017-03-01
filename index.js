@@ -15,7 +15,7 @@ function Messages (effects, update, namespace) {
             function (data) {
                 return namespace ? [namespace, [k, data]] : [k, data]
             } :
-            Messages(effects[k], update[k], k)
+            Messages(effects[k] || {}, update[k], k)
         return acc
     }, {})
     return msgs
