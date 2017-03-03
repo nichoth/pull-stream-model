@@ -5,6 +5,7 @@ var S = require('pull-stream/pull')
 S.through = require('pull-stream/throughs/through')
 S.map = require('pull-stream/throughs/map')
 S.once = require('pull-stream/sources/once')
+S.asyncMap = require('pull-stream/throughs/async-map')
 var cat = require('pull-cat')
 
 function Messages (effects, update, namespace) {
@@ -31,18 +32,6 @@ function _scan (fns) {
     }
 }
 
-function call (effects, msgs, state, parent) {
-    return function (ev) {
-        var target = effects[ev[0]]
-        if (!target) return parent ? [parent, ev] : ev
-        if (typeof target === 'function') {
-            return target(state, msgs, ev[1])
-        }
-        // is object
-        return call(effects[ev[0]], msgs[ev[0]], state[ev[0]], ev[0])(ev[1])
-    }
-}
-
 function Component (model) {
     var effects = model.effects || {}
     var msgs = Messages(effects, model.update)
@@ -50,10 +39,31 @@ function Component (model) {
 
     var scan = Scan(_scan(model.update), state)
 
+    function call (effects, msgs, path) {
+        return function (ev) {
+            var target = effects[ev[0]]
+            if (!target) return path ? path.concat([ev]) : ev
+            if (typeof target === 'function') {
+                var _state = (path || []).reduce(function (parent, key) {
+                    return parent[key]
+                }, state)
+                return target(_state, msgs, ev[1])
+            }
+            // is object
+            var _path = (path || []).concat([ev[0]])
+            return call(effects[ev[0]], msgs[ev[0]], _path)(ev[1])
+        }
+    }
+
     function EffectsStream () {
         var stream = S(
+            S.asyncMap(function (ev, cb) {
+                process.nextTick(function () {
+                    cb(null, ev)
+                })
+            }),
             flatMerge(),
-            S.map(call(effects, msgs, state)),
+            S.map(call(effects, msgs)),
             flatMerge()
         )
         return stream

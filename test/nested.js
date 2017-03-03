@@ -78,7 +78,6 @@ test('state references', function (t) {
     t.plan(2)
 
     Parent.effects.foo = function (state, msg, ev) {
-        console.log('state', state)
         t.equal(state.child, 'test',
                 'should have refernce to the same object')
         return msg.bar(ev + ' foo effect')
