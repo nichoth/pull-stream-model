@@ -51,7 +51,7 @@ Parent.effects = {
 
 
 
-test('model', function (t) {
+test('nested model', function (t) {
     t.plan(2)
     var parent = Component(Parent)
     var p = pushable()
@@ -70,6 +70,33 @@ test('model', function (t) {
                 { string: 'hi', child: '' },
                 { string: 'hi', child: 'test' }
             ], 'should nest everything')
+        })
+    )
+})
+
+test('state references', function (t) {
+    t.plan(2)
+
+    Parent.effects.foo = function (state, msg, ev) {
+        console.log('state', state)
+        t.equal(state.child, 'test',
+                'should have refernce to the same object')
+        return msg.bar(ev + ' foo effect')
+    }
+
+    var parent = Component(Parent)
+    var p = pushable()
+    p.push(parent.msg.bar('hi'))
+    p.push(parent.msg.child.bar('test'))
+    p.push(parent.msg.foo('foo event'))
+    p.end()
+
+    S(
+        p,
+        parent.effects(),
+        parent.store,
+        S.collect(function (err, res) {
+            t.error(err)
         })
     )
 })
