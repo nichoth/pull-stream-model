@@ -57,11 +57,6 @@ function Component (model) {
 
     function EffectsStream () {
         var stream = S(
-            S.asyncMap(function (ev, cb) {
-                process.nextTick(function () {
-                    cb(null, ev)
-                })
-            }),
             flatMerge(),
             S.map(call(effects, msgs)),
             flatMerge()

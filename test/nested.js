@@ -77,6 +77,7 @@ test('nested model', function (t) {
 test('state references', function (t) {
     t.plan(2)
 
+    // this only works if the source is async, which it is for our purposes
     Parent.effects.foo = function (state, msg, ev) {
         t.equal(state.child, 'test',
                 'should have refernce to the same object')
@@ -92,6 +93,11 @@ test('state references', function (t) {
 
     S(
         p,
+        S.asyncMap(function (ev, cb) {
+            process.nextTick(function () {
+                cb(null, ev)
+            })
+        }),
         parent.effects(),
         parent.store,
         S.collect(function (err, res) {
