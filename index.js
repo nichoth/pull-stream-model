@@ -6,6 +6,7 @@ S.through = require('pull-stream/throughs/through')
 S.map = require('pull-stream/throughs/map')
 S.once = require('pull-stream/sources/once')
 S.asyncMap = require('pull-stream/throughs/async-map')
+S.filter = require('pull-stream/throughs/filter')
 var cat = require('pull-cat')
 
 function Messages (effects, update, namespace) {
@@ -59,6 +60,7 @@ function Component (model) {
         var stream = S(
             flatMerge(),
             S.map(call(effects, msgs)),
+            S.filter(Boolean),
             flatMerge()
         )
         return stream
