@@ -84,3 +84,4 @@ function Component (model) {
 }
 
 module.exports = Component
+

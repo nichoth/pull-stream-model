@@ -15,14 +15,14 @@
   },
   "dependencies": {
     "pull-cat": "^1.1.11",
-    "pull-flat-merge": "^1.1.0",
+    "pull-flat-merge": "^1.2.0",
     "pull-scan": "^1.0.0",
     "pull-stream": "^3.5.0",
     "xtend": "^4.0.1"
   },
   "devDependencies": {
     "dependency-check": "^2.8.0",
-    "eslint": "^3.15.0",
+    "eslint": "^3.19.0",
     "eslint-config-minlint": "^2.0.0",
     "pull-async": "^1.0.0",
     "pull-cat": "^1.1.11",
