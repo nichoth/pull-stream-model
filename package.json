@@ -11,7 +11,7 @@
     "postversion": "git push && git push --tags && npm publish",
     "lint": "eslint .",
     "deps": "dependency-check package.json && dependency-check package.json --unused --entry test/*.js -i dependency-check -i eslint -i eslint-config-minlint -i tap-spec",
-    "test": "tape test/*.js | tap-spec"
+    "test": "tape test/*.js | tap-arc"
   },
   "dependencies": {
     "pull-cat": "^1.1.11",
@@ -27,8 +27,8 @@
     "pull-async": "^1.0.0",
     "pull-cat": "^1.1.11",
     "pull-pushable": "^2.0.1",
-    "tap-spec": "^4.1.1",
-    "tape": "^4.6.3"
+    "tap-arc": "^1.2.0",
+    "tape": "^5.7.2"
   },
   "repository": {
     "type": "git",
